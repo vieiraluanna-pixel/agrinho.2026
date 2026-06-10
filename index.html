@@ -1,1 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardiões da Natureza</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #fff3e0 100%);
+            color: #2c3e2f;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Cores principais */
+        :root {
+            --agua: #0288d1;
+            --verde: #2e7d32;
+            --por-do-sol: #ff8f00;
+            --texto: #1b5e20;
+        }
+
+        /* Botão de acessibilidade */
+        .acessibilidade {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c3e2f;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .acessibilidade button {
+            background: var(--por-do-sol);
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .acessibilidade button:hover {
+            background: var(--agua);
+        }
+
+        /* Aumentar/diminuir fonte */
+        .fonte-normal {
+            font-size: 100%;
+        }
+        .fonte-grande {
+            font-size: 120%;
+        }
+        .fonte-maior {
+            font-size: 140%;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, var(--verde), var(--agua));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background: var(--por-do-sol);
+            transform: scale(1.05);
+        }
+
+        /* Seções */
+        section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: auto;
+            border-bottom: 2px dashed var(--por-do-sol);
+        }
+
+        h2 {
+            color: var(--verde);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-left: 8px solid var(--agua);
+            padding-left: 20px;
+        }
+
+        .conteudo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .texto {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .imagem {
+            flex: 1;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Quiz */
+        .quiz-area {
+            background: #f9f7f0;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .pergunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 20px;
+            border-left: 8px solid var(--por-do-sol);
+        }
+
+        .pergunta p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .opcoes label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        button {
+            background: var(--verde);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: var(--agua);
+            transform: scale(1.02);
+        }
+
+        #resultado {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            background: var(--por-do-sol);
+            color: white;
+            padding: 15px;
+            border-radius: 40px;
+        }
+
+        footer {
+            background: #1b3b1a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            nav a {
+                display: block;
+                margin: 5px 0;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body id="corpo">
+    <!-- Botão de acessibilidade -->
+    <div class="acessibilidade">
+        <button id="aumentarFonte">A+</button>
+        <button id="diminuirFonte">A-</button>
+        <span style="margin:0 5px;">🔊</span>
+    </div>
+
+    <header>
+        <h1>🌿 Guardiões da Natureza 💧</h1>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#problema">Problema</a>
+            <a href="#solucoes">Soluções</a>
+            <a href="#quiz">Quiz</a>
+            <a href="#conclusao">Conclusão</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Página inicial -->
+        <section id="inicio">
+            <div class="conteudo">
+                <div class="texto">
+                    <h2>Bem-vindo, Guardião!</h2>
+                    <p>Você está pronto para proteger nossos rios e nascentes? 💙</p>
+                    <p>Explore nosso site e aprenda como pequenas atitudes podem salvar a água do planeta.</p>
+                    <button id="botaoIniciar">🌊 Iniciar Jornada 🌱</button>
+                </div>
+                <div class="imagem">
+                    <img src="https://placehold.co/600x400/0288d1/white?text=Rio+Preservado" alt="Imagem de um rio limpo e preservado com mata ciliar">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sobre o tema -->
+        <section id="sobre">
+            <h2>💧 Sobre o tema</h2>
+            <div class="conteudo">
+                <div class="imagem">
+                    <img src="https://placehold.co/600x400/2e7d32/white?text=Nascente+Limpinha" alt="Nascente de água cristalina brotando da terra">
+                </div>
+                <div class="texto">
+                    <p><strong>Guardiões da Natureza</strong> é um projeto que nasceu para proteger um dos nossos maiores tesouros: a água dos rios e nascentes.</p>
+                    <p>A água é vida para as plantas, animais e para nós. Sem rios saudáveis, não há agricultura forte nem futuro sustentável.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problema ambiental -->
+        <section id="problema">
+            <h2>⚠️ Poluição de rios e nascentes</h2>
+            <div class="conteudo">
+                <div class="texto">
+                    <p>Infelizmente, muitos rios estão sendo poluídos por:</p>
+                    <ul>
+                        <li>🗑️ Lixo plástico jogado nas margens</li>
+                        <li>🧪 Agrotóxicos da agricultura</li>
+                        <li>🏭 Esgoto sem tratamento</li>
+                        <li>🔥 Queimadas próximas aos mananciais</li>
+                    </ul>
+                    <p>Isso mata os peixes, prejudica a saúde das pessoas e acaba com a natureza.</p>
+                </div>
+                <div class="imagem">
+                    <img src="https://placehold.co/600x400/ff8f00/white?text=Rio+Poluído" alt="Rio sujo com garrafas plásticas e lixo boiando">
+                </div>
+            </div>
+        </section>
+
+        <!-- Soluções sustentáveis -->
+        <section id="solucoes">
+            <h2>🌱 Soluções sustentáveis</h2>
+            <div class="conteudo">
+                <div class="imagem">
+                    <img src="https://placehold.co/600x400/0288d1/white?text=Plantando+Árvores" alt="Pessoas plantando árvores perto de um rio">
+                </div>
+                <div class="texto">
+                    <p>Podemos ser verdadeiros guardiões com ações simples:</p>
+                    <ul>
+                        <li>✅ Nunca jogar lixo nos rios</li>
+                        <li>✅ Plantar árvores nas margens (mata ciliar)</li>
+                        <li>✅ Usar produtos orgânicos no campo</li>
+                        <li>✅ Economizar água no dia a dia</li>
+                        <li>✅ Denunciar poluição</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz -->
+        <section id="quiz">
+            <h2>🧠 Quiz dos Guardiões</h2>
+            <p>Responda as 20 perguntas e veja sua pontuação. Vamos proteger as águas juntos!</p>
+            <div class="quiz-area" id="quizContainer"></div>
+            <button id="corrigirQuiz">Corrigir Quiz</button>
+            <div id="resultado"></div>
+        </section>
+
+        <!-- Conclusão -->
+        <section id="conclusao">
+            <h2>🏆 Conclusão</h2>
+            <div class="conteudo">
+                <div class="texto">
+                    <p>Ser um Guardião da Natureza é um compromisso com a vida. Cada gota de água limpa importa. Cuidar dos rios e nascentes é garantir um futuro com saúde, alimento e esperança.</p>
+                    <p><strong>Junte-se a nós!</strong> 🌍💙</p>
+                </div>
+                <div class="imagem">
+                    <img src="https://placehold.co/600x400/ff8f00/white?text=Futuro+Sustentável" alt="Criança segurando uma muda de planta ao lado de um rio limpo">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 - Guardiões da Natureza | Projeto Agrinho - Agro forte, futuro sustentável</p>
+        <p>🌿 Conscientização ambiental para jovens</p>
+    </footer>
+
+    <script>
+        // ==================== PERGUNTAS DO QUIZ ====================
+        const perguntas = [
+            "O que são nascentes?", "Qual é a principal causa da poluição dos rios no campo?", "O que é mata ciliar?", "Por que não devemos jogar lixo nos rios?", "O que ajuda a proteger as nascentes?", "O que os agrotóxicos podem causar nos rios?", "Qual atitude é sustentável para proteger rios?", "O que acontece quando uma nascente é poluída?", "Qual cor representa a água no nosso projeto?", "O que podemos plantar para proteger os rios?", "O que significa 'Guardiões da Natureza'?", "Onde o lixo plástico no rio pode parar?", "Qual é um exemplo de descarte correto do lixo?", "O que os peixes sofrem com a poluição?", "O que podemos fazer para economizar água?", "Qual é o papel da agricultura sustentável?", "O que é um rio vivo?", "Por que as queimadas perto dos rios são perigosas?", "O que fazer ao ver alguém poluindo um rio?", "Qual é o futuro se cuidarmos bem dos rios?"
+        ];
+
+        const alternativas = [
+            ["Local onde a água brota da terra", "Lago artificial", "Cachoeira gigante"],
+            ["Lixo e agrotóxicos", "Muita chuva", "Peixes demais"],
+            ["Vegetação nas margens do rio", "Tipo de peixe", "Muro de contenção"],
+            ["Polui a água e mata animais", "Deixa o rio mais forte", "Ajuda a nascente"],
+            ["Plantar árvores ao redor", "Jogar lixo perto", "Cimentar a nascente"],
+            ["Contaminar a água", "Deixar mais limpa", "Ajudar os peixes"],
+            ["Coletar lixo do rio", "Usar muita água", "Queimar margens"],
+            ["A água some ou fica suja", "Fica mais bonita", "Nasce mais água"],
+            ["Azul", "Vermelho", "Preto"],
+            ["Árvores nativas", "Cactos", "Capim seco"],
+            ["Protetores da natureza", "Caçadores", "Fábricas"],
+            ["No estômago de animais", "Vira areia", "Desaparece"],
+            ["Lixeira e coleta seletiva", "Rio abaixo", "Queimando"],
+            ["Morrem ou ficam doentes", "Ficam felizes", "Nadam mais rápido"],
+            ["Fechar torneira e reutilizar", "Deixar aberta", "Lavar calçada todo dia"],
+            ["Produzir sem poluir rios", "Usar muito veneno", "Desviar nascentes"],
+            ["Com água limpa e vida", "Morto e sujo", "Seco demais"],
+            ["Destroem a vegetação e matam nascentes", "Ajudam a limpar", "Fazem bem à água"],
+            ["Denunciar e conscientizar", "Ignorar", "Ajudar a poluir"],
+            ["Rios limpos e natureza saudável", "Rios poluídos", "Secas extremas"]
+        ];
+
+        const respostasCorretas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        // Gerar quiz
+        const quizContainer = document.getElementById('quizContainer');
+        function carregarQuiz() {
+            quizContainer.innerHTML = '';
+            for (let i = 0; i < perguntas.length; i++) {
+                const divPergunta = document.createElement('div');
+                divPergunta.className = 'pergunta';
+                divPergunta.innerHTML = `<p><strong>${i+1}. ${perguntas[i]}</strong></p><div class="opcoes" id="opcoes-${i}"></div>`;
+                quizContainer.appendChild(divPergunta);
+                const opcoesDiv = divPergunta.querySelector(`.opcoes`);
+                alternativas[i].forEach((alt, idx) => {
+                    const label = document.createElement('label');
+                    label.innerHTML = `<input type="radio" name="pergunta${i}" value="${idx}"> ${alt}`;
+                    opcoesDiv.appendChild(label);
+                });
+            }
+        }
+
+        function corrigirQuiz() {
+            let acertos = 0;
+            for (let i = 0; i < perguntas.length; i++) {
+                const selecionado = document.querySelector(`input[name="pergunta${i}"]:checked`);
+                if (selecionado && parseInt(selecionado.value) === respostasCorretas[i]) {
+                    acertos++;
+                }
+            }
+            document.getElementById('resultado').innerHTML = `🌱 Você acertou ${acertos} de ${perguntas.length} perguntas! 🌟 Continue sendo um Guardião da Natureza! 💧`;
+        }
+
+        carregarQuiz();
+        document.getElementById('corrigirQuiz').addEventListener('click', corrigirQuiz);
+
+        // Botão iniciar (rolagem suave para o quiz)
+        document.getElementById('botaoIniciar').addEventListener('click', () => {
+            document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // ========== ACESSIBILIDADE: aumentar/diminuir fonte ==========
+        let tamanhoAtual = 0; // 0=normal, 1=grande, 2=maior
+        const corpo = document.getElementById('corpo');
+        function atualizarFonte() {
+            corpo.classList.remove('fonte-normal', 'fonte-grande', 'fonte-maior');
+            if (tamanhoAtual === 0) corpo.classList.add('fonte-normal');
+            else if (tamanhoAtual === 1) corpo.classList.add('fonte-grande');
+            else corpo.classList.add('fonte-maior');
+        }
+        document.getElementById('aumentarFonte').addEventListener('click', () => {
+            if (tamanhoAtual < 2) tamanhoAtual++;
+            atualizarFonte();
+        });
+        document.getElementById('diminuirFonte').addEventListener('click', () => {
+            if (tamanhoAtual > 0) tamanhoAtual--;
+            atualizarFonte();
+        });
+        atualizarFonte();
+    </script>
+</body>
+</html>
